@@ -13,6 +13,7 @@ declare type Props = {
     minWidth?: number;
     menuMaxHeight?: number;
     menuMaxWidth?: number;
+    helperText?: string;
 };
 export declare type MultiSelectElementProps = SelectProps & Props;
 declare const MultiSelectElement: React.FunctionComponent<MultiSelectElementProps>;

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         color: red[400]
     }
 });
-export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey = 'label', valueKey = 'id', onChange }) {
+export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey = 'label', valueKey = 'id', onChange, returnObject }) {
     const classes = useStyles();
     const { setValue, formValue, errorMessages } = useFormValidation({
         parseError,
@@ -23,12 +23,12 @@ export default function CheckboxButtonGroup({ helperText, options, label, name, 
     const values = formValue || [];
     const handleChange = (index) => {
         const newArray = [...values];
-        const exists = values.findIndex(i => i[valueKey] === index) === -1;
+        const exists = values.findIndex(i => returnObject ? i[valueKey] === index : i === index) === -1;
         if (exists) {
-            newArray.push(options.find(i => i[valueKey] === index));
+            newArray.push(returnObject ? options.find(i => i[valueKey] === index) : index);
         }
         else {
-            newArray.splice(values.findIndex(i => i[valueKey] === index), 1);
+            newArray.splice(values.findIndex(i => returnObject ? i[valueKey] === index : i === index), 1);
         }
         setValue(name, newArray, true);
         onChange && onChange(newArray);
@@ -46,7 +46,7 @@ export default function CheckboxButtonGroup({ helperText, options, label, name, 
             if (!optionKey) {
                 console.error(`CheckboxButtonGroup: valueKey ${valueKey} does not exist on option`, option);
             }
-            const isChecked = values.findIndex(item => item[valueKey] === optionKey) !== -1;
+            const isChecked = values.findIndex(item => returnObject ? item[valueKey] === optionKey : item === optionKey) !== -1;
             return (React.createElement(FormControlLabel, { control: React.createElement(Checkbox, Object.assign({}, checkboxProps, { color: "primary", value: optionKey, checked: isChecked, onChange: () => handleChange(optionKey) })), label: option[labelKey], key: optionKey }));
         })),
         helperText && React.createElement(FormHelperText, null, helperText)));

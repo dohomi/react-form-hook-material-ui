@@ -1,5 +1,5 @@
 {
-  "name": "react-storybook-ts",
+  "name": "react-form-hook-material-ui",
   "main": "dist/index.js",
   "version": "0.1.0",
   "private": true,
@@ -7,7 +7,8 @@
     "start": "start-storybook -p 9009 -s public",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "test": "react-scripts test",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy":"npm run build-storybook && cd storybook-static && now --name react-form-hook-material-ui --prod"
   },
   "eslintConfig": {
     "extends": [

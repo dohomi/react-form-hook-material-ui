@@ -11,5 +11,6 @@ export declare type RadioButtonGroupProps = {
     type?: 'number' | 'string';
     emptyOptionLabel?: 'string';
     onChange?: Function;
+    returnObject?: boolean;
 };
-export default function RadioButtonGroup({ helperText, options, label, name, parseError, labelKey, valueKey, required, emptyOptionLabel, onChange }: RadioButtonGroupProps): JSX.Element;
+export default function RadioButtonGroup({ helperText, options, label, name, parseError, labelKey, valueKey, required, emptyOptionLabel, onChange, returnObject }: RadioButtonGroupProps): JSX.Element;

@@ -24,5 +24,5 @@ export default function DatePickerElement(_a) {
         setValue(name, parsedDate, true);
         rest.onChange && rest.onChange(parsedDate);
     }
-    return (React.createElement(DatePicker, Object.assign({}, rest, { value: formValue, required: !!required, onChange: onChange, error: !!errorMessages, helperText: errorMessages || rest.helperText })));
+    return (React.createElement(DatePicker, Object.assign({}, rest, { value: formValue ? formValue : null, required: !!required, onChange: onChange, error: !!errorMessages, helperText: errorMessages || rest.helperText })));
 }

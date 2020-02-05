@@ -9,5 +9,6 @@ export declare type RadioButtonGroupProps = {
     labelKey?: string;
     valueKey?: string;
     onChange?: Function;
+    returnObject?: boolean;
 };
-export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey, valueKey, onChange }: RadioButtonGroupProps): JSX.Element;
+export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey, valueKey, onChange, returnObject }: RadioButtonGroupProps): JSX.Element;

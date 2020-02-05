@@ -25,7 +25,7 @@ export default function SelectElement(_a) {
         value = value[valueKey]; // if value is object get key
     }
     const isNativeSelect = !!(rest.SelectProps && rest.SelectProps.native);
-    const component = isNativeSelect ? 'option' : MenuItem;
+    const ChildComponent = isNativeSelect ? 'option' : MenuItem;
     const onChange = (event) => {
         let item = event.target.value;
         if (type === 'number') {
@@ -47,7 +47,7 @@ export default function SelectElement(_a) {
     }
     return (React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: helperText, onChange: onChange }),
         !!isNativeSelect && React.createElement("option", null),
-        options.map((item) => createElement(component, {
+        options.map((item) => createElement(ChildComponent, {
             key: `${name}_${item[valueKey]}`,
             value: item[valueKey]
         }, item[labelKey]))));

@@ -15,10 +15,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import useFormValidation from './helpers/useFormValidation';
+import FormHelperText from '@material-ui/core/FormHelperText';
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MultiSelectElement = (_a) => {
-    var { menuItems, label = '', itemKey = '', itemValue = '', itemLabel = '', required = false, validation = {}, parseError, name, menuMaxHeight = ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, menuMaxWidth = 250, minWidth = 120 } = _a, rest = __rest(_a, ["menuItems", "label", "itemKey", "itemValue", "itemLabel", "required", "validation", "parseError", "name", "menuMaxHeight", "menuMaxWidth", "minWidth"]);
+    var { menuItems, label = '', itemKey = '', itemValue = '', itemLabel = '', required = false, validation = {}, parseError, name, menuMaxHeight = ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP, menuMaxWidth = 250, minWidth = 120, helperText } = _a, rest = __rest(_a, ["menuItems", "label", "itemKey", "itemValue", "itemLabel", "required", "validation", "parseError", "name", "menuMaxHeight", "menuMaxWidth", "minWidth", "helperText"]);
     const { formValue, setValue, errorMessages } = useFormValidation({
         name,
         parseError,
@@ -30,9 +31,10 @@ const MultiSelectElement = (_a) => {
     const handleChange = (event) => {
         setValue(name, event.target.value, true);
     };
-    return (React.createElement(FormControl, { style: { minWidth }, fullWidth: rest.fullWidth },
-        React.createElement(InputLabel, { htmlFor: "select-multiple" }, label),
-        React.createElement(Select, Object.assign({ multiple: true, value: formValue || [], onChange: handleChange, MenuProps: {
+    helperText = errorMessages || helperText;
+    return (React.createElement(FormControl, { style: { minWidth }, fullWidth: rest.fullWidth, error: !!errorMessages },
+        React.createElement(InputLabel, { htmlFor: "select-multiple", required: required }, label),
+        React.createElement(Select, Object.assign({ multiple: true, value: formValue || [], required: required, onChange: handleChange, MenuProps: {
                 PaperProps: {
                     style: {
                         maxHeight: menuMaxHeight,
@@ -41,6 +43,7 @@ const MultiSelectElement = (_a) => {
                 }
             } }, rest, { inputProps: {
                 error: errorMessages
-            } }), menuItems.map((item) => (React.createElement(MenuItem, { key: !!itemKey ? item[itemKey] : item, value: itemValue ? item[itemValue] : item, style: { fontWeight: (formValue || []).includes(item) ? 'bold' : 'normal' } }, itemLabel ? item[itemLabel] : item))))));
+            } }), menuItems.map((item) => (React.createElement(MenuItem, { key: !!itemKey ? item[itemKey] : item, value: itemValue ? item[itemValue] : item, style: { fontWeight: (formValue || []).includes(item) ? 'bold' : 'normal' } }, itemLabel ? item[itemLabel] : item)))),
+        helperText && React.createElement(FormHelperText, null, helperText)));
 };
 export default MultiSelectElement;

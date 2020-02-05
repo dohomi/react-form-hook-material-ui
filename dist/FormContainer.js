@@ -10,13 +10,14 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import React from 'react';
-import useForm, { FormContext } from 'react-hook-form';
+import { FormContext, useForm } from 'react-hook-form';
 const FormContainer = (_a) => {
     var { onSuccess, defaultValues } = _a, rest = __rest(_a, ["onSuccess", "defaultValues"]);
-    const useFormContext = useForm({
+    const methods = useForm({
         defaultValues
     });
-    return (React.createElement(FormContext, Object.assign({}, useFormContext),
-        React.createElement("form", { onSubmit: useFormContext.handleSubmit(onSuccess), noValidate: true }, rest.children)));
+    const { handleSubmit } = methods;
+    return (React.createElement(FormContext, Object.assign({}, methods),
+        React.createElement("form", { onSubmit: handleSubmit(onSuccess), noValidate: true }, rest.children)));
 };
 export default FormContainer;

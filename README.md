@@ -1,8 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
+
+This project showcases how to use `react-hook-form` and `Material-UI`
+
+Demo on how to use (powered by [zeit.co](https://zeit.co))
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+[Demo](https://react-form-hook-material-ui.now.sh)
 
 ### `npm start`
 

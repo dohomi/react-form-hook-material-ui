@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import getNestedValue from './helpers/getNestedValue';
 /**
  * Important: variant is not part of props due to nasty and un-resolvable. you can't use variant only as provider props
@@ -20,12 +20,12 @@ import getNestedValue from './helpers/getNestedValue';
  */
 export default function TextFieldElement(_a) {
     var { validation, parseError, type, required, name } = _a, rest = __rest(_a, ["validation", "parseError", "type", "required", "name"]);
-    const { register, errors, getValues } = useFormContext();
+    const { errors, getValues, control } = useFormContext();
     const formValue = getNestedValue(getValues({ nest: true }), name);
     const value = formValue || '';
     if (required) {
         validation = validation || {};
-        validation.required = 'required';
+        validation.required = 'This field is required';
     }
     if (type === 'email') {
         validation = validation || {};
@@ -35,19 +35,17 @@ export default function TextFieldElement(_a) {
             message: 'email'
         };
     }
+    const fieldError = errors[name];
     const getErrorMessages = () => {
-        const errorType = errors[name];
+        var _a;
+        const errorType = (_a = fieldError) === null || _a === void 0 ? void 0 : _a.type;
+        if (Array.isArray(fieldError)) {
+            console.error('Unexpected field error', fieldError);
+        }
         if (!errorType)
             return;
-        return parseError ? parseError(errorType) : errorType.message;
+        return parseError ? parseError(errorType) : `This field is ${errorType}`;
     };
     const errorMessages = getErrorMessages();
-    const registerProps = {
-        inputRef: register
-    };
-    if (validation) {
-        // @ts-ignore
-        registerProps.inputRef = register(validation);
-    }
-    return (React.createElement(TextField, Object.assign({}, rest, registerProps, { defaultValue: value, required: required, name: name, type: type, error: !!errorMessages, helperText: errorMessages || rest.helperText })));
+    return React.createElement(Controller, { required: required, defaultValue: value, name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { type: type, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
 }
