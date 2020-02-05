@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": true,
+    "target": "es2015",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": false,
+    "outDir": "./dist",
+    "declaration": true
+
+  },
+  "include": [
+    "src/form/**/*.tsx",
+    "src/form/**/*.ts"
+
+  ],
+  "exclude": [
+    "src/form/**/*.stories.*",
+    "src/form/**/*.test.*",
+    "node_modules",
+    "dist"
+  ]
+}
