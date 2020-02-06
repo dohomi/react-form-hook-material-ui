@@ -4,6 +4,8 @@ import { storiesOf } from '@storybook/react'
 import RadioButtonGroup from './RadioButtonGroup'
 import { action } from '@storybook/addon-actions'
 import { object, text } from '@storybook/addon-knobs'
+import { FormContainer } from './index'
+import Button from '@material-ui/core/Button'
 
 storiesOf('RadioButtonGroup', module)
   .add(
@@ -11,7 +13,9 @@ storiesOf('RadioButtonGroup', module)
     () => {
 
       return (
-        <>
+        <FormContainer defaultValues={{
+          'default-radio-element': '2'
+        }} onSuccess={action('submit')}>
           <div>
             <RadioButtonGroup
               label={text('label', 'Simple Radio Group with preset')}
@@ -47,7 +51,8 @@ storiesOf('RadioButtonGroup', module)
               onChange={action('change')}
             />
           </div>
-        </>
+          <Button type={'submit'} color={'primary'}>Submit</Button>
+        </FormContainer>
       )
     }
   )

@@ -4,12 +4,14 @@ import { storiesOf } from '@storybook/react'
 import CheckboxButtonGroup from './CheckboxButtonGroup'
 import { action } from '@storybook/addon-actions'
 import { object, text } from '@storybook/addon-knobs'
+import { FormContainer } from './index'
+import Button from '@material-ui/core/Button'
 
 storiesOf('CheckboxButtonGroup', module)
   .add(
     'basic',
     () => (
-      <div>
+      <FormContainer defaultValues={{}} onSuccess={action('submit')}>
         <div>
           <CheckboxButtonGroup
             label={text('label', 'The label')}
@@ -36,6 +38,7 @@ storiesOf('CheckboxButtonGroup', module)
             onChange={action('selected')}
           />
         </div>
-      </div>
+        <Button type={'submit'} color={'primary'}>Submit</Button>
+      </FormContainer>
     )
   )

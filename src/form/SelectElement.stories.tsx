@@ -2,9 +2,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import SelectElement from './SelectElement'
-import { createStyles, Theme, makeStyles } from '@material-ui/core'
+import { createStyles, makeStyles, Theme } from '@material-ui/core'
 import { action } from '@storybook/addon-actions'
 import { object, text } from '@storybook/addon-knobs'
+import { FormContainer } from './index'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,18 +24,21 @@ storiesOf('SelectElement', module)
       const classes = useStyles()
 
       return (
-        <SelectElement
-          className={classes.formControl}
-          value='Basic Select'
-          required
-          parseError={() => {
-            return 'This field is required'
-          }}
-          label={text('label', 'The label')}
-          name='default-select-element'
-          options={object('Options', [{id: '1', title: 'Label 1'}, {id: '2', title: 'label 2'}])}
-          onChange={action('change')}
-        />
+        <FormContainer defaultValues={{}} onSuccess={action('submit')}>
+          <SelectElement
+            className={classes.formControl}
+            value='Basic Select'
+            required
+            parseError={() => {
+              return 'This field is required'
+            }}
+            label={text('label', 'The label')}
+            name='default-select-element'
+            options={object('Options', [{ id: '1', title: 'Label 1' }, { id: '2', title: 'label 2' }])}
+            onChange={action('change')}
+          /><br/>
+          <Button type={'submit'} color={'primary'}>Submit</Button>
+        </FormContainer>
       )
     }
   )

@@ -1,14 +1,17 @@
 /* eslint-disable import/first */
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { TextFieldElement } from './index'
+import { FormContainer, TextFieldElement } from './index'
 import { text } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import Button from '@material-ui/core/Button'
 
 storiesOf('TextFieldElement', module)
   .add(
     'basic',
     () => (
-      <div>
+      <FormContainer defaultValues={{}} onSuccess={action('submit')}>
+
         <div>
           <TextFieldElement
             required
@@ -38,6 +41,7 @@ storiesOf('TextFieldElement', module)
             type={'number'}
           />
         </div>
-      </div>
+        <Button type={'submit'} color={'primary'}>Submit</Button>
+      </FormContainer>
     )
   )
