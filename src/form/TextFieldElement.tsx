@@ -10,7 +10,7 @@ export type TextFieldElementModule = Omit<TextFieldProps,
   parseError?: Function;
 }
 
-type TextFieldValidationProps = TextFieldElementModule
+export type TextFieldValidationProps = TextFieldElementModule
 
 /**
  * Important: variant is not part of props due to nasty and un-resolvable. you can't use variant only as provider props
@@ -18,7 +18,7 @@ type TextFieldValidationProps = TextFieldElementModule
  * See: https://github.com/mui-org/material-ui/issues/15697
  */
 export default function TextFieldElement({
-  validation,
+  validation = {},
   parseError,
   type,
   required,
@@ -30,11 +30,9 @@ export default function TextFieldElement({
   const formValue: any = getNestedValue(getValues({ nest: true }), name)
   const value = formValue || ''
   if (required) {
-    validation = validation || {}
     validation.required = 'This field is required'
   }
   if (type === 'email') {
-    validation = validation || {}
     validation.pattern = {
       // eslint-disable-next-line no-useless-escape
       value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -45,7 +43,7 @@ export default function TextFieldElement({
   const fieldError = errors[name] as FieldError | undefined
   const getErrorMessages = () => {
     const errorType: string | undefined = fieldError?.type
-    if(Array.isArray(fieldError)){
+    if (Array.isArray(fieldError)) {
       console.error('Unexpected field error', fieldError)
     }
     if (!errorType) return
@@ -53,7 +51,6 @@ export default function TextFieldElement({
   }
 
   const errorMessages = getErrorMessages()
-
   return <Controller
     required={required}
     defaultValue={value}

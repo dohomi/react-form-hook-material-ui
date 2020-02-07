@@ -12,7 +12,7 @@ const FormContainer = ({
   const methods = useForm({
     defaultValues
   })
-  const {handleSubmit} = methods
+  const { handleSubmit} = methods
 
   return (
     <FormContext {...methods}>

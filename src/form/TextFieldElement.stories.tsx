@@ -1,25 +1,48 @@
 /* eslint-disable import/first */
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { storiesOf } from '@storybook/react'
-import { FormContainer, TextFieldElement } from './index'
-import { text } from '@storybook/addon-knobs'
+import { FormContainer, PasswordElement, TextFieldElement } from './index'
 import { action } from '@storybook/addon-actions'
 import Button from '@material-ui/core/Button'
+import { useFormContext } from 'react-hook-form'
+
+const PasswordRepeat: FunctionComponent = () => {
+  const { getValues } = useFormContext()
+  return (
+    <PasswordElement margin={'dense'}
+                     label={'Password Repeat'}
+                     required
+                     parseError={(e: string) => {
+                       if (e === 'validate') {
+                         return 'Password does not match'
+                       }
+                       return 'This field is required'
+                     }}
+                     validation={{
+                       validate: (value: string) => {
+                         const {password} = getValues()
+                         return value === password || 'Password should match'
+                       }
+                     }}
+                     name={'password-repeat'}
+    />
+  )
+}
 
 storiesOf('TextFieldElement', module)
   .add(
     'basic',
-    () => (
-      <FormContainer defaultValues={{}} onSuccess={action('submit')}>
+    () => {
+      const form = {}
 
-        <div>
+      return (
+        <FormContainer defaultValues={form} onSuccess={action('submit')}>
           <TextFieldElement
             required
-            label={text('label', 'Text Field', 'Text Field')}
+            margin={'dense'}
+            label={'Name'}
             name={'default-text-field'}
-          />
-        </div>
-        <div>
+          /><br />
           <TextFieldElement
             required
             parseError={(errorType: string) => {
@@ -29,19 +52,25 @@ storiesOf('TextFieldElement', module)
               return 'This field is required'
             }}
             type={'email'}
-            label={text('label 2', 'Email Field', 'Text Field')}
+            margin={'dense'}
+            label={'Email'}
             name={'default-email-field'}
-          />
-        </div>
-        <div>
+          /><br />
           <TextFieldElement
-            label={text('label', 'Number Field', 'Number Field')}
+            margin={'dense'}
+            label={'Number'}
             name={'number-text-field'}
             required
             type={'number'}
-          />
-        </div>
-        <Button type={'submit'} color={'primary'}>Submit</Button>
-      </FormContainer>
-    )
+          /><br />
+          <PasswordElement margin={'dense'}
+                           label={'Password'}
+                           required
+                           name={'password'}
+          /><br />
+          <PasswordRepeat /><br />
+          <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
+        </FormContainer>
+      )
+    }
   )
