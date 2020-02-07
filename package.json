@@ -1,6 +1,6 @@
 {
   "name": "react-hook-form-material-ui",
-  "main": "dist/index.js",
+  "main": "index.js",
   "version": "0.1.0",
   "private": true,
   "scripts": {

@@ -19,16 +19,14 @@ import getNestedValue from './helpers/getNestedValue';
  * See: https://github.com/mui-org/material-ui/issues/15697
  */
 export default function TextFieldElement(_a) {
-    var { validation, parseError, type, required, name } = _a, rest = __rest(_a, ["validation", "parseError", "type", "required", "name"]);
+    var { validation = {}, parseError, type, required, name } = _a, rest = __rest(_a, ["validation", "parseError", "type", "required", "name"]);
     const { errors, getValues, control } = useFormContext();
     const formValue = getNestedValue(getValues({ nest: true }), name);
     const value = formValue || '';
     if (required) {
-        validation = validation || {};
         validation.required = 'This field is required';
     }
     if (type === 'email') {
-        validation = validation || {};
         validation.pattern = {
             // eslint-disable-next-line no-useless-escape
             value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

@@ -5,3 +5,4 @@ export { default as FormContainer } from './dist/FormContainer';
 export { default as RadioButtonGroup } from './dist/RadioButtonGroup';
 export { default as SelectElement } from './dist/SelectElement';
 export { default as MultiSelectElement } from './dist/MultiSelectElement';
+export { default as PasswordElement } from './dist/PasswordElement';
