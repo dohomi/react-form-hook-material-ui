@@ -1,6 +1,7 @@
 import React from 'react'
 import { DatePicker, DatePickerProps } from '@material-ui/pickers'
-import useFormValidation from './helpers/useFormValidation'
+import { Controller, FieldError, useFormContext } from 'react-hook-form'
+import getNestedValue from './helpers/getNestedValue'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 interface DatePickerElement
@@ -10,36 +11,61 @@ interface DatePickerElement
   isDate?: boolean;
   parseError?: Function;
   onChange?: Function;
+  validation?: any;
 }
 
 type DatePickerElementProps = DatePickerElement
 
 export default function DatePickerElement({
-                                            isDate,
-                                            parseError,
-                                            name,
-                                            required,
-                                            ...rest
-                                          }: DatePickerElementProps): JSX.Element {
-  const { formValue, errorMessages, setValue } = useFormValidation({
-    name,
-    parseError,
-    required
-  })
+  isDate,
+  parseError,
+  name,
+  required,
+  validation = {},
+  ...rest
+}: DatePickerElementProps): JSX.Element {
+  const { errors, getValues, control, setValue } = useFormContext()
+  const formValue: any = getNestedValue(getValues({ nest: true }), name)
+  const value = formValue || null
+  if (required) {
+    validation.required = 'This field is required'
+  }
+  // const { formValue, errorMessages, setValue } = useFormValidation({
+  //   name,
+  //   parseError,
+  //   required
+  // })
+
   function onChange(date: MaterialUiPickersDate): void {
     const parsedDate = isDate && date ? date && date.toISOString().substr(0, 10) : date
     setValue(name, parsedDate, true)
     rest.onChange && rest.onChange(parsedDate)
   }
 
-  return (
-    <DatePicker
+  const fieldError = errors[name] as FieldError | undefined
+  const getErrorMessages = () => {
+    const errorType: string | undefined = fieldError?.type
+    if (Array.isArray(fieldError)) {
+      console.error('Unexpected field error', fieldError)
+    }
+    if (!errorType) return
+    return parseError ? parseError(errorType) : `This field is ${errorType}`
+  }
+
+  const errorMessages = getErrorMessages()
+
+  return <Controller
+    name={name}
+    defaultValue={value}
+    required={!!required}
+    control={control}
+    rules={validation}
+    as={<DatePicker
       {...rest}
-      value={formValue ? formValue : null}
-      required={!!required}
+      value={value}
       onChange={onChange}
       error={!!errorMessages}
       helperText={errorMessages || rest.helperText}
-    />
-  )
+    />}
+  />
 }
