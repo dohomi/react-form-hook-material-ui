@@ -6,7 +6,8 @@ interface DatePickerElement extends Omit<DatePickerProps, 'value' | 'onChange'> 
     isDate?: boolean;
     parseError?: Function;
     onChange?: Function;
+    validation?: any;
 }
 declare type DatePickerElementProps = DatePickerElement;
-export default function DatePickerElement({ isDate, parseError, name, required, ...rest }: DatePickerElementProps): JSX.Element;
+export default function DatePickerElement({ isDate, parseError, name, required, validation, ...rest }: DatePickerElementProps): JSX.Element;
 export {};
