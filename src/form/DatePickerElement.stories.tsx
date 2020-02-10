@@ -18,7 +18,9 @@ storiesOf('DatePickerElement', module)
     'basic',
     () => (
       <MuiPickersUtilsProvider utils={LocalizedUtils}>
-        <FormContainer defaultValues={{}} onSuccess={action('submit')}>
+        <FormContainer defaultValues={{
+          'default-date-picker': '2020-01-01'
+        }} onSuccess={action('submit')}>
           <div>
             <DatePickerElement
               label={text('label', 'Default date picker')}
@@ -38,6 +40,15 @@ storiesOf('DatePickerElement', module)
               name={'required-date-picker'}
               required
               openTo="year"
+            />
+          </div>
+          <div>
+            <DatePickerElement
+              label={'Default date picker'}
+              name={'default-date-picker'}
+              required
+              helperText={'Default value set to 01/01/2020'}
+
             />
           </div>
           <Button type={'submit'} color={'primary'}>Submit</Button>
