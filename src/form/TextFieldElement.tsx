@@ -1,7 +1,8 @@
 import React from 'react'
 import TextField, { TextFieldProps } from '@material-ui/core/TextField'
-import { Controller, FieldError, useFormContext } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import getNestedValue from './helpers/getNestedValue'
+import getErrorMessages from './helpers/getErrorMessages'
 
 export type TextFieldElementModule = Omit<TextFieldProps,
   'name' | 'variant'> & {
@@ -39,18 +40,7 @@ export default function TextFieldElement({
       message: 'email'
     }
   }
-
-  const fieldError = errors[name] as FieldError | undefined
-  const getErrorMessages = () => {
-    const errorType: string | undefined = fieldError?.type
-    if (Array.isArray(fieldError)) {
-      console.error('Unexpected field error', fieldError)
-    }
-    if (!errorType) return
-    return parseError ? parseError(errorType) : `This field is ${errorType}`
-  }
-
-  const errorMessages = getErrorMessages()
+  const errorMessages = getErrorMessages(name, errors, parseError)
   return <Controller
     required={required}
     defaultValue={value}

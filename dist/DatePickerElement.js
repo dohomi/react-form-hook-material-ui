@@ -13,6 +13,7 @@ import React from 'react';
 import { DatePicker } from '@material-ui/pickers';
 import { Controller, useFormContext } from 'react-hook-form';
 import getNestedValue from './helpers/getNestedValue';
+import getErrorMessages from './helpers/getErrorMessages';
 export default function DatePickerElement(_a) {
     var { isDate, parseError, name, required, validation = {} } = _a, rest = __rest(_a, ["isDate", "parseError", "name", "required", "validation"]);
     const { errors, getValues, control, setValue } = useFormContext();
@@ -21,27 +22,11 @@ export default function DatePickerElement(_a) {
     if (required) {
         validation.required = 'This field is required';
     }
-    // const { formValue, errorMessages, setValue } = useFormValidation({
-    //   name,
-    //   parseError,
-    //   required
-    // })
     function onChange(date) {
         const parsedDate = isDate && date ? date && date.toISOString().substr(0, 10) : date;
         setValue(name, parsedDate, true);
         rest.onChange && rest.onChange(parsedDate);
     }
-    const fieldError = errors[name];
-    const getErrorMessages = () => {
-        var _a;
-        const errorType = (_a = fieldError) === null || _a === void 0 ? void 0 : _a.type;
-        if (Array.isArray(fieldError)) {
-            console.error('Unexpected field error', fieldError);
-        }
-        if (!errorType)
-            return;
-        return parseError ? parseError(errorType) : `This field is ${errorType}`;
-    };
-    const errorMessages = getErrorMessages();
+    const errorMessages = getErrorMessages(name, errors, parseError);
     return React.createElement(Controller, { name: name, defaultValue: value, required: !!required, control: control, rules: validation, as: React.createElement(DatePicker, Object.assign({}, rest, { value: value, onChange: onChange, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
 }

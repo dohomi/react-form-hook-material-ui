@@ -13,5 +13,5 @@ export declare type SelectElementModule = CustomTextFieldProps & {
     onChange?: Function;
 };
 declare type TextFieldValidationProps = SelectElementModule;
-export default function SelectElement({ name, required, valueKey, labelKey, options, parseError, type, objectOnChange, ...rest }: TextFieldValidationProps): JSX.Element;
+export default function SelectElement({ name, required, valueKey, labelKey, options, parseError, type, objectOnChange, validation, ...rest }: TextFieldValidationProps): JSX.Element;
 export {};

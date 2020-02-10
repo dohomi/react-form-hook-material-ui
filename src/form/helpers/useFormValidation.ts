@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { FieldError, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import getNestedValue from './getNestedValue'
+import getErrorMessages from './getErrorMessages'
 
 type UseFormValidationProps = {
   required?: boolean
@@ -16,13 +17,6 @@ export default function useFormValidation({
   const { setValue, errors, register, unregister, watch } = useFormContext()
   const vals = watch({ nest: true })
   const formValue: any = getNestedValue(vals, name)
-
-  const fieldError = errors[name] as FieldError | undefined
-  const getErrorMessages = () => {
-    const errorType: string | undefined = fieldError?.type
-    if (!errorType) return
-    return parseError ? parseError(errorType) : `This field is ${errorType}`
-  }
 
   useEffect(() => {
     if (required) {
@@ -42,6 +36,6 @@ export default function useFormValidation({
       unregister(name)
     }
   }, [register, name, required, unregister])
-  const errorMessages = getErrorMessages()
+  const errorMessages = getErrorMessages(name, errors, parseError)
   return { formValue, setValue, errorMessages, watch }
 }

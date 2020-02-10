@@ -13,6 +13,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext } from 'react-hook-form';
 import getNestedValue from './helpers/getNestedValue';
+import getErrorMessages from './helpers/getErrorMessages';
 /**
  * Important: variant is not part of props due to nasty and un-resolvable. you can't use variant only as provider props
  *
@@ -33,17 +34,6 @@ export default function TextFieldElement(_a) {
             message: 'email'
         };
     }
-    const fieldError = errors[name];
-    const getErrorMessages = () => {
-        var _a;
-        const errorType = (_a = fieldError) === null || _a === void 0 ? void 0 : _a.type;
-        if (Array.isArray(fieldError)) {
-            console.error('Unexpected field error', fieldError);
-        }
-        if (!errorType)
-            return;
-        return parseError ? parseError(errorType) : `This field is ${errorType}`;
-    };
-    const errorMessages = getErrorMessages();
+    const errorMessages = getErrorMessages(name, errors, parseError);
     return React.createElement(Controller, { required: required, defaultValue: value, name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { type: type, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
 }

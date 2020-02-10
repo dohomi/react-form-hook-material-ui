@@ -12,20 +12,22 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React, { createElement } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import useFormValidation from './helpers/useFormValidation';
+import { Controller, useFormContext } from 'react-hook-form';
+import getNestedValue from './helpers/getNestedValue';
+import getErrorMessages from './helpers/getErrorMessages';
 export default function SelectElement(_a) {
-    var { name, required, valueKey = 'id', labelKey = 'title', options = [], parseError, type, objectOnChange } = _a, rest = __rest(_a, ["name", "required", "valueKey", "labelKey", "options", "parseError", "type", "objectOnChange"]);
-    const { formValue, setValue, errorMessages } = useFormValidation({
-        name,
-        parseError,
-        required
-    });
+    var { name, required, valueKey = 'id', labelKey = 'title', options = [], parseError, type, objectOnChange, validation = {} } = _a, rest = __rest(_a, ["name", "required", "valueKey", "labelKey", "options", "parseError", "type", "objectOnChange", "validation"]);
+    const { errors, getValues, control, setValue } = useFormContext();
+    const formValue = getNestedValue(getValues({ nest: true }), name);
     let value = formValue || '';
     if (value && typeof value === 'object') {
         value = value[valueKey]; // if value is object get key
     }
     const isNativeSelect = !!(rest.SelectProps && rest.SelectProps.native);
     const ChildComponent = isNativeSelect ? 'option' : MenuItem;
+    if (required) {
+        validation.required = 'This field is required';
+    }
     const onChange = (event) => {
         let item = event.target.value;
         if (type === 'number') {
@@ -39,16 +41,16 @@ export default function SelectElement(_a) {
             rest.onChange && rest.onChange(item);
         }
     };
-    const helperText = errorMessages || rest.helperText;
     // handle shrink on number input fields
     if (type === 'number' && value) {
         rest.InputLabelProps = rest.InputLabelProps || {};
         rest.InputLabelProps.shrink = true;
     }
-    return (React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: helperText, onChange: onChange }),
-        !!isNativeSelect && React.createElement("option", null),
-        options.map((item) => createElement(ChildComponent, {
-            key: `${name}_${item[valueKey]}`,
-            value: item[valueKey]
-        }, item[labelKey]))));
+    const errorMessages = getErrorMessages(name, errors, parseError);
+    return React.createElement(Controller, { name: name, defaultValue: value, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: errorMessages || rest.helperText, onChange: onChange }),
+            !!isNativeSelect && React.createElement("option", null),
+            options.map((item) => createElement(ChildComponent, {
+                key: `${name}_${item[valueKey]}`,
+                value: item[valueKey]
+            }, item[labelKey]))) });
 }

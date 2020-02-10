@@ -1,8 +1,9 @@
 import React from 'react'
 import { DatePicker, DatePickerProps } from '@material-ui/pickers'
-import { Controller, FieldError, useFormContext } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import getNestedValue from './helpers/getNestedValue'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
+import getErrorMessages from './helpers/getErrorMessages'
 
 interface DatePickerElement
   extends Omit<DatePickerProps, 'value' | 'onChange'> {
@@ -30,30 +31,13 @@ export default function DatePickerElement({
   if (required) {
     validation.required = 'This field is required'
   }
-  // const { formValue, errorMessages, setValue } = useFormValidation({
-  //   name,
-  //   parseError,
-  //   required
-  // })
 
   function onChange(date: MaterialUiPickersDate): void {
     const parsedDate = isDate && date ? date && date.toISOString().substr(0, 10) : date
     setValue(name, parsedDate, true)
     rest.onChange && rest.onChange(parsedDate)
   }
-
-  const fieldError = errors[name] as FieldError | undefined
-  const getErrorMessages = () => {
-    const errorType: string | undefined = fieldError?.type
-    if (Array.isArray(fieldError)) {
-      console.error('Unexpected field error', fieldError)
-    }
-    if (!errorType) return
-    return parseError ? parseError(errorType) : `This field is ${errorType}`
-  }
-
-  const errorMessages = getErrorMessages()
-
+  const errorMessages = getErrorMessages(name, errors, parseError)
   return <Controller
     name={name}
     defaultValue={value}
