@@ -13,7 +13,8 @@ const PasswordElement: FunctionComponent<TextFieldValidationProps> = (props) => 
       endAdornment: (
         <InputAdornment position={'end'}>
           <IconButton onMouseDown={(e: MouseEvent<HTMLButtonElement>) => e.preventDefault()}
-                      onClick={() => setPassword(!password)}>
+                      onClick={() => setPassword(!password)}
+                      tabIndex={-1}>
             {password ? <Visibility /> : <VisibilityOff />}
           </IconButton>
         </InputAdornment>)
