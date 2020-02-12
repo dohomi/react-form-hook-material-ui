@@ -8,7 +8,7 @@ const PasswordElement = (props) => {
     const [password, setPassword] = useState(true);
     return React.createElement(TextFieldElement, Object.assign({}, props, { InputProps: {
             endAdornment: (React.createElement(InputAdornment, { position: 'end' },
-                React.createElement(IconButton, { onMouseDown: (e) => e.preventDefault(), onClick: () => setPassword(!password) }, password ? React.createElement(Visibility, null) : React.createElement(VisibilityOff, null))))
+                React.createElement(IconButton, { onMouseDown: (e) => e.preventDefault(), onClick: () => setPassword(!password), tabIndex: -1 }, password ? React.createElement(Visibility, null) : React.createElement(VisibilityOff, null))))
         }, type: password ? 'password' : 'text' }));
 };
 export default PasswordElement;
