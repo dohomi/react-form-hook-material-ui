@@ -12,7 +12,6 @@ var __rest = (this && this.__rest) || function (s, e) {
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext } from 'react-hook-form';
-import getNestedValue from './helpers/getNestedValue';
 import getErrorMessages from './helpers/getErrorMessages';
 /**
  * Important: variant is not part of props due to nasty and un-resolvable. you can't use variant only as provider props
@@ -21,9 +20,9 @@ import getErrorMessages from './helpers/getErrorMessages';
  */
 export default function TextFieldElement(_a) {
     var { validation = {}, parseError, type, required, name } = _a, rest = __rest(_a, ["validation", "parseError", "type", "required", "name"]);
-    const { errors, getValues, control } = useFormContext();
-    const formValue = getNestedValue(getValues({ nest: true }), name);
-    const value = formValue || '';
+    const { errors, control } = useFormContext();
+    // const formValue: any = getNestedValue(getValues({ nest: true }), name)
+    // const value = formValue || ''
     if (required) {
         validation.required = 'This field is required';
     }
@@ -35,5 +34,5 @@ export default function TextFieldElement(_a) {
         };
     }
     const errorMessages = getErrorMessages(name, errors, parseError);
-    return React.createElement(Controller, { required: required, defaultValue: value, name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { type: type, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
+    return React.createElement(Controller, { required: required, name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { type: type, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
 }

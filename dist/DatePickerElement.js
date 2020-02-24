@@ -18,7 +18,7 @@ export default function DatePickerElement(_a) {
     var { isDate, parseError, name, required, validation = {} } = _a, rest = __rest(_a, ["isDate", "parseError", "name", "required", "validation"]);
     const { errors, getValues, control, setValue } = useFormContext();
     const formValue = getNestedValue(getValues({ nest: true }), name);
-    const value = formValue || null;
+    const value = formValue || undefined;
     if (required) {
         validation.required = 'This field is required';
     }
@@ -28,5 +28,5 @@ export default function DatePickerElement(_a) {
         rest.onChange && rest.onChange(parsedDate);
     }
     const errorMessages = getErrorMessages(name, errors, parseError);
-    return React.createElement(Controller, { name: name, defaultValue: value, required: !!required, control: control, rules: validation, as: React.createElement(DatePicker, Object.assign({}, rest, { value: value, onChange: onChange, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
+    return React.createElement(Controller, { name: name, required: !!required, control: control, rules: validation, as: React.createElement(DatePicker, Object.assign({}, rest, { value: value, onChange: onChange, error: !!errorMessages, helperText: errorMessages || rest.helperText })) });
 }

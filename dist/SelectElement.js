@@ -47,7 +47,7 @@ export default function SelectElement(_a) {
         rest.InputLabelProps.shrink = true;
     }
     const errorMessages = getErrorMessages(name, errors, parseError);
-    return React.createElement(Controller, { name: name, defaultValue: value, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: errorMessages || rest.helperText, onChange: onChange }),
+    return React.createElement(Controller, { name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: errorMessages || rest.helperText, onChange: onChange }),
             !!isNativeSelect && React.createElement("option", null),
             options.map((item) => createElement(ChildComponent, {
                 key: `${name}_${item[valueKey]}`,
