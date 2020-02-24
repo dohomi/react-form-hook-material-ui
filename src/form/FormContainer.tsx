@@ -1,23 +1,25 @@
-import React, { PropsWithChildren } from 'react'
+import React, { FormHTMLAttributes, FunctionComponent } from 'react'
 import { FormContext, useForm } from 'react-hook-form'
 
-const FormContainer = ({
+const FormContainer: FunctionComponent<{
+  onSuccess: any;
+  defaultValues: any;
+  FormProps?: FormHTMLAttributes<HTMLFormElement>;
+}> = ({
   onSuccess,
   defaultValues,
-  ...rest
-}: PropsWithChildren<{
-  onSuccess: any;
-  defaultValues: {};
-}>): JSX.Element => {
+  children,
+  FormProps
+}) => {
   const methods = useForm({
     defaultValues
   })
-  const { handleSubmit} = methods
+  const { handleSubmit } = methods
 
   return (
     <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSuccess)} noValidate>
-        {rest.children}
+      <form onSubmit={handleSubmit(onSuccess)} noValidate {...FormProps}>
+        {children}
       </form>
     </FormContext>
   )

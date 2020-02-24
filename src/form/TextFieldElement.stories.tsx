@@ -20,7 +20,7 @@ const PasswordRepeat: FunctionComponent = () => {
                      }}
                      validation={{
                        validate: (value: string) => {
-                         const {password} = getValues()
+                         const { password } = getValues()
                          return value === password || 'Password should match'
                        }
                      }}
@@ -36,9 +36,14 @@ storiesOf('TextFieldElement', module)
       const form = {}
 
       return (
-        <FormContainer defaultValues={form} onSuccess={action('submit')}>
+        <FormContainer defaultValues={form} onSuccess={action('submit')}
+                       FormProps={{
+                         'aria-autocomplete': 'none',
+                         autoComplete: 'new-password'
+                       }}>
           <TextFieldElement
             required
+            autoComplete={'new-password'}
             margin={'dense'}
             label={'Name'}
             name={'default-text-field'}
@@ -84,7 +89,9 @@ storiesOf('TextFieldElement', module)
       }
 
       return (
-        <FormContainer defaultValues={form} onSuccess={action('submit')}>
+        <FormContainer defaultValues={form}
+                       onSuccess={action('submit')}
+        >
           <TextFieldElement
             required
             margin={'dense'}
@@ -110,7 +117,7 @@ storiesOf('TextFieldElement', module)
             name={'number-text-field'}
             required
             type={'number'}
-          /><br/>
+          /><br />
           <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
         </FormContainer>
       )
