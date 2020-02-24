@@ -123,3 +123,51 @@ storiesOf('TextFieldElement', module)
       )
     }
   )
+  .add(
+    'pre-defined-nested',
+    () => {
+      const form = {
+        a: {
+          'default-text-field': 'Test Data'
+        },
+        b: {
+          'default-email-field': 'info@example.com',
+          'number-text-field': 6
+        }
+      }
+
+      return (
+        <FormContainer defaultValues={form}
+                       onSuccess={action('submit')}
+        >
+          <TextFieldElement
+            required
+            margin={'dense'}
+            label={'Name'}
+            name={'a.default-text-field'}
+          /><br />
+          <TextFieldElement
+            required
+            parseError={(errorType: string) => {
+              if (errorType === 'pattern') {
+                return 'Enter an email'
+              }
+              return 'This field is required'
+            }}
+            type={'email'}
+            margin={'dense'}
+            label={'Email'}
+            name={'b.default-email-field'}
+          /><br />
+          <TextFieldElement
+            margin={'dense'}
+            label={'Number'}
+            name={'b.number-text-field'}
+            required
+            type={'number'}
+          /><br />
+          <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
+        </FormContainer>
+      )
+    }
+  )
