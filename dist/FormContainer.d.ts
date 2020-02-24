@@ -1,6 +1,7 @@
-import React from 'react';
-declare const FormContainer: ({ onSuccess, defaultValues, ...rest }: React.PropsWithChildren<{
+import { FormHTMLAttributes, FunctionComponent } from 'react';
+declare const FormContainer: FunctionComponent<{
     onSuccess: any;
-    defaultValues: {};
-}>) => JSX.Element;
+    defaultValues: any;
+    FormProps?: FormHTMLAttributes<HTMLFormElement>;
+}>;
 export default FormContainer;
