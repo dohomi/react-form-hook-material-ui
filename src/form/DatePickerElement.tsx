@@ -27,7 +27,7 @@ export default function DatePickerElement({
 }: DatePickerElementProps): JSX.Element {
   const { errors, getValues, control, setValue } = useFormContext()
   const formValue: any = getNestedValue(getValues({ nest: true }), name)
-  const value = formValue || null
+  const value = formValue || undefined
   if (required) {
     validation.required = 'This field is required'
   }
@@ -37,10 +37,11 @@ export default function DatePickerElement({
     setValue(name, parsedDate, true)
     rest.onChange && rest.onChange(parsedDate)
   }
+
   const errorMessages = getErrorMessages(name, errors, parseError)
+
   return <Controller
     name={name}
-    defaultValue={value}
     required={!!required}
     control={control}
     rules={validation}

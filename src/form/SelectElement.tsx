@@ -65,7 +65,6 @@ export default function SelectElement({
   const errorMessages = getErrorMessages(name, errors, parseError)
   return <Controller
     name={name}
-    defaultValue={value}
     control={control}
     rules={validation}
     as={<TextField

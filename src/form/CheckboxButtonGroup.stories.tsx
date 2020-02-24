@@ -11,7 +11,9 @@ storiesOf('CheckboxButtonGroup', module)
   .add(
     'basic',
     () => (
-      <FormContainer defaultValues={{}} onSuccess={action('submit')}>
+      <FormContainer defaultValues={{
+        'basic-checkbox-button-group':['1']
+      }} onSuccess={action('submit')}>
         <div>
           <CheckboxButtonGroup
             label={text('label', 'The label')}

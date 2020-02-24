@@ -1,7 +1,6 @@
 import React from 'react'
 import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import { Controller, useFormContext } from 'react-hook-form'
-import getNestedValue from './helpers/getNestedValue'
 import getErrorMessages from './helpers/getErrorMessages'
 
 export type TextFieldElementModule = Omit<TextFieldProps,
@@ -26,10 +25,10 @@ export default function TextFieldElement({
   name,
   ...rest
 }: TextFieldValidationProps): JSX.Element {
-  const { errors, getValues, control } = useFormContext()
+  const { errors, control } = useFormContext()
 
-  const formValue: any = getNestedValue(getValues({ nest: true }), name)
-  const value = formValue || ''
+  // const formValue: any = getNestedValue(getValues({ nest: true }), name)
+  // const value = formValue || ''
   if (required) {
     validation.required = 'This field is required'
   }
@@ -43,7 +42,6 @@ export default function TextFieldElement({
   const errorMessages = getErrorMessages(name, errors, parseError)
   return <Controller
     required={required}
-    defaultValue={value}
     name={name}
     control={control}
     rules={validation}
