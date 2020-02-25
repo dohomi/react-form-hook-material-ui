@@ -5,7 +5,11 @@ declare type UseFormValidationProps = {
 };
 export default function useFormValidation({ required, name, parseError }: UseFormValidationProps): {
     formValue: any;
-    setValue: <Name extends string>(name: Name, value: any, shouldValidate?: boolean | undefined) => void | Promise<boolean>;
+    setValue: {
+        <Name extends string>(name: Name, value?: any, shouldValidate?: boolean | undefined): void;
+        <Name_1 extends string>(namesWithValue: Record<Name_1, any>[], shouldValidate?: boolean | undefined): void;
+        <Name_2 extends string>(names: Name_2 | Record<Name_2, any>[], valueOrShouldValidate?: any, shouldValidate?: boolean | undefined): void;
+    };
     errorMessages: any;
     watch: {
         (): Record<string, any>;

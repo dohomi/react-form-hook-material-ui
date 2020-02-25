@@ -152,6 +152,7 @@ storiesOf('TextFieldElement', module)
               if (errorType === 'pattern') {
                 return 'Enter an email'
               }
+              debugger
               return 'This field is required'
             }}
             type={'email'}
