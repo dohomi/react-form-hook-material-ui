@@ -1,4 +1,4 @@
-import React, { createElement } from 'react'
+import React, { createElement, FunctionComponent } from 'react'
 import MenuItem from '@material-ui/core/MenuItem'
 import TextField, { TextFieldProps } from '@material-ui/core/TextField'
 import { Controller, useFormContext } from 'react-hook-form'
@@ -6,7 +6,7 @@ import getNestedValue from './helpers/getNestedValue'
 import getErrorMessages from './helpers/getErrorMessages'
 
 type CustomTextFieldProps = Omit<TextFieldProps,
-  'name' | 'variant' | 'type' | 'onChange'>
+  'name' | 'variant' | 'type'>
 export type SelectElementModule = CustomTextFieldProps & {
   validation?: any;
   name: string;
@@ -20,7 +20,7 @@ export type SelectElementModule = CustomTextFieldProps & {
 }
 type TextFieldValidationProps = SelectElementModule
 
-export default function SelectElement({
+const SelectElement: FunctionComponent<TextFieldValidationProps> = ({
   name,
   required,
   valueKey = 'id',
@@ -31,7 +31,7 @@ export default function SelectElement({
   objectOnChange,
   validation = {},
   ...rest
-}: TextFieldValidationProps): JSX.Element {
+}) => {
   const { errors, getValues, control, setValue } = useFormContext()
   const formValue: any = getNestedValue(getValues({ nest: true }), name)
   let value = formValue || ''
@@ -53,7 +53,7 @@ export default function SelectElement({
       if (objectOnChange) {
         item = options.find(i => i[valueKey] === item)
       }
-      rest.onChange && rest.onChange(item)
+      rest.onChange && rest.onChange(item as any)
     }
   }
 
@@ -74,7 +74,9 @@ export default function SelectElement({
       required={required}
       error={!!errorMessages}
       helperText={errorMessages || rest.helperText}
-      onChange={onChange}
+      InputProps={{
+        onChange
+      }}
     >
       {!!isNativeSelect && <option />}
       {options.map((item: any) =>
@@ -89,3 +91,4 @@ export default function SelectElement({
       )}
     </TextField>} />
 }
+export default SelectElement

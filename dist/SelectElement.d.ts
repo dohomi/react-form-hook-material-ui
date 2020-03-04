@@ -1,6 +1,6 @@
-/// <reference types="react" />
+import { FunctionComponent } from 'react';
 import { TextFieldProps } from '@material-ui/core/TextField';
-declare type CustomTextFieldProps = Omit<TextFieldProps, 'name' | 'variant' | 'type' | 'onChange'>;
+declare type CustomTextFieldProps = Omit<TextFieldProps, 'name' | 'variant' | 'type'>;
 export declare type SelectElementModule = CustomTextFieldProps & {
     validation?: any;
     name: string;
@@ -13,5 +13,5 @@ export declare type SelectElementModule = CustomTextFieldProps & {
     onChange?: Function;
 };
 declare type TextFieldValidationProps = SelectElementModule;
-export default function SelectElement({ name, required, valueKey, labelKey, options, parseError, type, objectOnChange, validation, ...rest }: TextFieldValidationProps): JSX.Element;
-export {};
+declare const SelectElement: FunctionComponent<TextFieldValidationProps>;
+export default SelectElement;

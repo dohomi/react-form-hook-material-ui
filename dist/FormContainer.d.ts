@@ -1,7 +1,10 @@
 import { FormHTMLAttributes, FunctionComponent } from 'react';
-declare const FormContainer: FunctionComponent<{
+import { FormContextValues } from 'react-hook-form';
+export declare type FormContainerProps = {
     onSuccess: any;
-    defaultValues: any;
+    defaultValues?: any;
+    formContext?: FormContextValues;
     FormProps?: FormHTMLAttributes<HTMLFormElement>;
-}>;
+};
+declare const FormContainer: FunctionComponent<FormContainerProps>;
 export default FormContainer;

@@ -15,7 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import { Controller, useFormContext } from 'react-hook-form';
 import getNestedValue from './helpers/getNestedValue';
 import getErrorMessages from './helpers/getErrorMessages';
-export default function SelectElement(_a) {
+const SelectElement = (_a) => {
     var { name, required, valueKey = 'id', labelKey = 'title', options = [], parseError, type, objectOnChange, validation = {} } = _a, rest = __rest(_a, ["name", "required", "valueKey", "labelKey", "options", "parseError", "type", "objectOnChange", "validation"]);
     const { errors, getValues, control, setValue } = useFormContext();
     const formValue = getNestedValue(getValues({ nest: true }), name);
@@ -47,10 +47,13 @@ export default function SelectElement(_a) {
         rest.InputLabelProps.shrink = true;
     }
     const errorMessages = getErrorMessages(name, errors, parseError);
-    return React.createElement(Controller, { name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: errorMessages || rest.helperText, onChange: onChange }),
+    return React.createElement(Controller, { name: name, control: control, rules: validation, as: React.createElement(TextField, Object.assign({}, rest, { select: true, value: value, required: required, error: !!errorMessages, helperText: errorMessages || rest.helperText, InputProps: {
+                onChange
+            } }),
             !!isNativeSelect && React.createElement("option", null),
             options.map((item) => createElement(ChildComponent, {
                 key: `${name}_${item[valueKey]}`,
                 value: item[valueKey]
             }, item[labelKey]))) });
-}
+};
+export default SelectElement;

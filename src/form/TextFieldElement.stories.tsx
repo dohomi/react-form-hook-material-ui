@@ -1,10 +1,17 @@
 /* eslint-disable import/first */
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import { storiesOf } from '@storybook/react'
 import { FormContainer, PasswordElement, TextFieldElement } from './index'
 import { action } from '@storybook/addon-actions'
 import Button from '@material-ui/core/Button'
-import { useFormContext } from 'react-hook-form'
+import { useForm, useFormContext } from 'react-hook-form'
+
+const parseError = (errorType: string) => {
+  if (errorType === 'pattern') {
+    return 'Enter an email'
+  }
+  return 'This field is required'
+}
 
 const PasswordRepeat: FunctionComponent = () => {
   const { getValues } = useFormContext()
@@ -12,12 +19,7 @@ const PasswordRepeat: FunctionComponent = () => {
     <PasswordElement margin={'dense'}
                      label={'Password Repeat'}
                      required
-                     parseError={(e: string) => {
-                       if (e === 'validate') {
-                         return 'Password does not match'
-                       }
-                       return 'This field is required'
-                     }}
+                     parseError={parseError}
                      validation={{
                        validate: (value: string) => {
                          const { password } = getValues()
@@ -50,12 +52,7 @@ storiesOf('TextFieldElement', module)
           /><br />
           <TextFieldElement
             required
-            parseError={(errorType: string) => {
-              if (errorType === 'pattern') {
-                return 'Enter an email'
-              }
-              return 'This field is required'
-            }}
+            parseError={parseError}
             type={'email'}
             margin={'dense'}
             label={'Email'}
@@ -100,12 +97,7 @@ storiesOf('TextFieldElement', module)
           /><br />
           <TextFieldElement
             required
-            parseError={(errorType: string) => {
-              if (errorType === 'pattern') {
-                return 'Enter an email'
-              }
-              return 'This field is required'
-            }}
+            parseError={parseError}
             type={'email'}
             margin={'dense'}
             label={'Email'}
@@ -148,13 +140,7 @@ storiesOf('TextFieldElement', module)
           /><br />
           <TextFieldElement
             required
-            parseError={(errorType: string) => {
-              if (errorType === 'pattern') {
-                return 'Enter an email'
-              }
-              debugger
-              return 'This field is required'
-            }}
+            parseError={parseError}
             type={'email'}
             margin={'dense'}
             label={'Email'}
@@ -167,6 +153,34 @@ storiesOf('TextFieldElement', module)
             required
             type={'number'}
           /><br />
+          <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
+        </FormContainer>
+      )
+    }
+  )
+  .add(
+    'with form context',
+    () => {
+      const formContext = useForm({
+        defaultValues: {
+          email: '',
+          name: ''
+        }
+      })
+      const { watch } = formContext
+      const emailValue = watch('email')
+
+      useEffect(
+        () => {
+          console.log('email changed', emailValue)
+        },
+        [emailValue]
+      )
+      return (
+        <FormContainer onSuccess={action('submit')}
+                       formContext={formContext}>
+          <TextFieldElement name={'name'} label={'Name'} parseError={parseError} required /><br />
+          <TextFieldElement name={'email'} type="email" label={'Email'} required parseError={parseError} /><br />
           <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
         </FormContainer>
       )

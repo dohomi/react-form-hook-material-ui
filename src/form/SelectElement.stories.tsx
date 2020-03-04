@@ -25,6 +25,7 @@ storiesOf('SelectElement', module)
 
       return (
         <FormContainer defaultValues={{
+          'default-select-element': '',
           'pre-select-element': '1'
         }} onSuccess={action('submit')}>
           <SelectElement
@@ -50,6 +51,7 @@ storiesOf('SelectElement', module)
             name='pre-select-element'
             options={object('Options', [{ id: '1', title: 'Label 1' }, { id: '2', title: 'label 2' }])}
             onChange={action('change')}
+            objectOnChange
           /><br/>
           <Button type={'submit'} color={'primary'}>Submit</Button>
         </FormContainer>
