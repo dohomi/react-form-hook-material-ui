@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         color: red[400]
     }
 });
-export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey = 'label', valueKey = 'id', onChange, returnObject }) {
+export default function CheckboxButtonGroup({ helperText, options, label, name, parseError, required, labelKey = 'label', valueKey = 'id', onChange, returnObject, disabled }) {
     const classes = useStyles();
     const { setValue, formValue, errorMessages } = useFormValidation({
         parseError,
@@ -47,7 +47,7 @@ export default function CheckboxButtonGroup({ helperText, options, label, name, 
                 console.error(`CheckboxButtonGroup: valueKey ${valueKey} does not exist on option`, option);
             }
             const isChecked = values.findIndex(item => returnObject ? item[valueKey] === optionKey : item === optionKey) !== -1;
-            return (React.createElement(FormControlLabel, { control: React.createElement(Checkbox, Object.assign({}, checkboxProps, { color: "primary", value: optionKey, checked: isChecked, onChange: () => handleChange(optionKey) })), label: option[labelKey], key: optionKey }));
+            return (React.createElement(FormControlLabel, { control: React.createElement(Checkbox, Object.assign({}, checkboxProps, { color: "primary", value: optionKey, checked: isChecked, disabled: disabled, onChange: () => handleChange(optionKey) })), label: option[labelKey], key: optionKey }));
         })),
         helperText && React.createElement(FormHelperText, null, helperText)));
 }

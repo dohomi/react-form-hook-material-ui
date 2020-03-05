@@ -12,7 +12,8 @@ storiesOf('CheckboxButtonGroup', module)
     'basic',
     () => (
       <FormContainer defaultValues={{
-        'basic-checkbox-button-group':['1']
+        'basic-checkbox-button-group':['1'],
+        'disabled-checkbox-button-group':['1'],
       }} onSuccess={action('submit')}>
         <div>
           <CheckboxButtonGroup
@@ -38,6 +39,15 @@ storiesOf('CheckboxButtonGroup', module)
             name={'required-checkbox-button-group'}
             required
             onChange={action('selected')}
+          />
+        </div>
+        <div>
+          <CheckboxButtonGroup
+            label={text('label3', 'Disabled Checkbox Group')}
+            options={object('Options', [{ id: '1', label: 'Label 1' }, { id: '2', label: 'label 2' }])}
+            name={'disabled-checkbox-button-group'}
+            onChange={action('selected')}
+            disabled={true}
           />
         </div>
         <Button type={'submit'} color={'primary'}>Submit</Button>

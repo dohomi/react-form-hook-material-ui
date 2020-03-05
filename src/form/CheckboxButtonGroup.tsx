@@ -21,6 +21,7 @@ export type RadioButtonGroupProps = {
   valueKey?: string;
   onChange?: Function;
   returnObject?: boolean;
+  disabled?: boolean;
 }
 
 const useStyles = makeStyles({
@@ -39,7 +40,8 @@ export default function CheckboxButtonGroup({
   labelKey = 'label',
   valueKey = 'id',
   onChange,
-  returnObject
+  returnObject,
+  disabled
 }: RadioButtonGroupProps): JSX.Element {
   const classes = useStyles()
   const { setValue, formValue, errorMessages } = useFormValidation({
@@ -89,6 +91,7 @@ export default function CheckboxButtonGroup({
                   color="primary"
                   value={optionKey}
                   checked={isChecked}
+                  disabled={disabled}
                   onChange={() => handleChange(optionKey)}
                 />
               }
