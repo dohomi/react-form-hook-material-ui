@@ -6,3 +6,4 @@ export { default as RadioButtonGroup } from './RadioButtonGroup';
 export { default as SelectElement } from './SelectElement';
 export { default as MultiSelectElement } from './MultiSelectElement';
 export { default as PasswordElement } from './PasswordElement';
+export { default as CheckboxElement } from './CheckboxElement';
