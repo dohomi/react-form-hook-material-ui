@@ -1,7 +1,7 @@
 {
   "name": "react-hook-form-material-ui",
-  "main": "dist/index.js",
-  "version": "0.12.1",
+  "main": "index.js",
+  "version": "0.13.0",
   "private": true,
   "scripts": {
     "start": "start-storybook -p 9009 -s public",
