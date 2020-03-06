@@ -6,14 +6,15 @@ import { action } from '@storybook/addon-actions'
 import { object, text } from '@storybook/addon-knobs'
 import { FormContainer } from './index'
 import Button from '@material-ui/core/Button'
+import CheckboxElement from './CheckboxElement'
 
 storiesOf('CheckboxButtonGroup', module)
   .add(
     'basic',
     () => (
       <FormContainer defaultValues={{
-        'basic-checkbox-button-group':['1'],
-        'disabled-checkbox-button-group':['1'],
+        'basic-checkbox-button-group': ['1'],
+        'disabled-checkbox-button-group': ['1']
       }} onSuccess={action('submit')}>
         <div>
           <CheckboxButtonGroup
@@ -53,4 +54,25 @@ storiesOf('CheckboxButtonGroup', module)
         <Button type={'submit'} color={'primary'}>Submit</Button>
       </FormContainer>
     )
+  )
+  .add(
+    'single checkbox',
+    () => {
+      return (
+        <>
+          <FormContainer defaultValues={{
+            'required': false,
+            'simple': false,
+            'pre-selected': true,
+            'pre-selected-required': true
+          }} onSuccess={action('submit')}>
+            <CheckboxElement name={'simple'} label={'Simple Checkbox'} /><br />
+            <CheckboxElement name={'pre-selected'} label={'Pre-Selected Checkbox'} /><br />
+            <CheckboxElement name={'required'} label={'Required Checkbox'} required /><br />
+            <CheckboxElement name={'pre-selected-required'} label={'Pre-Selected Required Checkbox'} required /><br />
+            <Button type={'submit'} color={'primary'}> Submit</Button>
+          </FormContainer>
+        </>
+      )
+    }
   )

@@ -5,6 +5,7 @@ import { FormContainer, PasswordElement, TextFieldElement } from './index'
 import { action } from '@storybook/addon-actions'
 import Button from '@material-ui/core/Button'
 import { useForm, useFormContext } from 'react-hook-form'
+import CheckboxElement from './CheckboxElement'
 
 const parseError = (errorType: string) => {
   if (errorType === 'pattern') {
@@ -35,7 +36,9 @@ storiesOf('TextFieldElement', module)
   .add(
     'basic',
     () => {
-      const form = {}
+      const form = {
+        agree: false
+      }
 
       return (
         <FormContainer defaultValues={form} onSuccess={action('submit')}
@@ -71,6 +74,7 @@ storiesOf('TextFieldElement', module)
                            name={'password'}
           /><br />
           <PasswordRepeat /><br />
+          <CheckboxElement name={'agree'} label={'Agree'} required /><br />
           <Button type={'submit'} color={'primary'} variant={'contained'}>Submit</Button>
         </FormContainer>
       )
